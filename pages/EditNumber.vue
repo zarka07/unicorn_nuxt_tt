@@ -7,6 +7,9 @@
 </template>
 <script>
 export default {
+  validate({query}){
+    return /^\d+$/.test(query.number)
+  },
   data() {
     return {
       newNumber: "",

@@ -29,10 +29,10 @@ export const actions = {
   },
   SET_NUMBERS: async ({ commit, state }, payload) => {
     const url = new URL(state.url)
-    console.log('2', payload)
     url.searchParams.append('page', payload.page)
     url.searchParams.append('limit', payload.limit);
     url.searchParams.append('order', payload.sort);
+    console.log('payload:', payload)
     await axios({
       method: 'get',
       url: url,
@@ -56,7 +56,7 @@ export const actions = {
         if (response.status === 200) {
           dispatch("SET_NUMBERS", {
             page: getters.GET_PAGE,
-            limit: 5,
+            limit: getters.GET_PER_PAGE,
             sort: 'desc'
           })
           alert(response.statusText);
@@ -66,6 +66,7 @@ export const actions = {
       });
   },
   DELETE_NUMBER: async ({ dispatch, state, getters }, id) => {
+    console.log('here')
     await axios({
       method: 'delete',
       url: state.url + id,

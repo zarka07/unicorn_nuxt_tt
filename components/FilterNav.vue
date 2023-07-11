@@ -2,14 +2,14 @@
   <nav class="filter-nav">
     <div class="sort">
       Sort by:
-      <button
-        @click="currentSorting = 'desc'"
+      <button 
+        @click="currentSorting = 'asc'"
         :class="{ active: currentSorting === 'asc' }"
       >
         Desc
       </button>
       <button
-        @click="currentSorting = 'asc'"
+        @click="currentSorting = 'desc'"
         :class="{ active: currentSorting === 'desc' }"
       >
         Asc

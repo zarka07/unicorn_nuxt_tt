@@ -7,10 +7,10 @@
         <SingleNumber
           :number="number"
           @delete-number="deleteNumber(number.id)"
-        ></SingleNumber>
+        >{{number.id}}></SingleNumber>
       </div>
     </div>
-    <div v-else>No numbers</div>
+    <div class="page-number" v-else>No numbers</div>
     <div class="_pagination">
       <button
         :disabled="page===1"
@@ -45,33 +45,37 @@ export default {
     FilterNav,
     AddNumber,
   },
-  data() {
-    return {
-      sorting: "desc",
-    };
+  mounted(){
+    this.$fetch()
   },
-  mounted() {
-    this.$store.dispatch("index/SET_NUMBERS", {
+  async fetch(){
+    await this.$store.dispatch("SET_NUMBERS", {
       page: this.page,
       limit: this.perPage,
       sort: this.sorting,
     })
   },
+  data() {
+    return {
+      sorting: "desc",
+    };
+  },
   methods: {
     deleteNumber(id) {
-      this.$store.dispatch("index/DELETE_NUMBER", id);
+      console.log('emit delete')
+      this.$store.dispatch("DELETE_NUMBER", id);
     },
     prevPage() {
-      this.$store.dispatch("index/PAGE_DOWN");
-      this.$store.dispatch("index/SET_NUMBERS", {
+      this.$store.dispatch("PAGE_DOWN");
+      this.$store.dispatch("SET_NUMBERS", {
         page: this.page,
         limit: this.perPage,
         sort: this.sorting,
       });
     },
     nextPage() {
-      this.$store.dispatch("index/PAGE_UP");
-      this.$store.dispatch("index/SET_NUMBERS", {
+      this.$store.dispatch("PAGE_UP");
+      this.$store.dispatch("SET_NUMBERS", {
         page: this.page,
         limit: this.perPage,
         sort: this.sorting,
@@ -98,10 +102,10 @@ export default {
 </script>
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Open+Sans:ital,wght@0,300;1,600&family=Poppins:wght@200;400&display=swap');
-
 body{
-  background-color: #131e2a;
+  margin:0;
 }
+
 #app {
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -118,5 +122,7 @@ body{
 button.pagination {
   margin: 10px;
 }
-
+.page-number{
+  color:#FFF;
+}
 </style>

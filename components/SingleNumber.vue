@@ -11,7 +11,7 @@
           }"
           ><span class="material-symbols-outlined">edit</span></router-link
         >
-        <span @click="$emit('deleteNumber')" class="material-symbols-outlined delete">delete</span>
+        <span @click="deleteNumber" class="material-symbols-outlined delete">delete</span>
       </div>
     </div>
     <div v-if="showDetails" class="details">
@@ -27,6 +27,12 @@ export default {
     return {
       showDetails: false,
     };
+  },
+  methods:{
+    deleteNumber(){
+      console.log('emitted')
+      this.$nuxt.$emit('deleteNumber')
+    }
   },
   computed: {
     addDate() {
